@@ -5,35 +5,25 @@ Scrape automotive news from multiple sources.
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import json
+from pathlib import Path
 
-# News sources to scrape
-SOURCES = [
-    {
-        "name": "Autoblog",
-        "url": "https://www.autoblog.com/",
-        "selector": "article h2 a"
-    },
-    {
-        "name": "The Drive",
-        "url": "https://www.thedrive.com/news",
-        "selector": "h3 a"
-    },
-    {
-        "name": "Jalopnik",
-        "url": "https://jalopnik.com/",
-        "selector": "h1 a"
-    },
-    {
-        "name": "Electrek",
-        "url": "https://electrek.co/",
-        "selector": "h2.article-title a"
-    },
-    {
-        "name": "Car and Driver",
-        "url": "https://www.caranddriver.com/news/",
-        "selector": "h3.article-title a"
-    }
-]
+SOURCES_FILE = Path(__file__).parent / "sources.json"
+
+def load_sources():
+    """Load sources from JSON file."""
+    if SOURCES_FILE.exists():
+        with open(SOURCES_FILE, 'r') as f:
+            return json.load(f)
+    
+    # Default sources if file doesn't exist
+    return [
+        {"name": "Autoblog", "url": "https://www.autoblog.com/", "selector": "article h2 a"},
+        {"name": "The Drive", "url": "https://www.thedrive.com/news", "selector": "h3 a"},
+        {"name": "Jalopnik", "url": "https://jalopnik.com/", "selector": "h1 a"},
+        {"name": "Electrek", "url": "https://electrek.co/", "selector": "h2.article-title a"},
+        {"name": "Car and Driver", "url": "https://www.caranddriver.com/news/", "selector": "h3.article-title a"}
+    ]
 
 def fetch_articles_from_source(source):
     """Fetch articles from a single source."""
@@ -80,9 +70,10 @@ def fetch_all_articles():
     """Fetch articles from all sources."""
     print("🔍 Fetching automotive news...")
     
+    sources = load_sources()
     all_articles = []
     
-    for source in SOURCES:
+    for source in sources:
         articles = fetch_articles_from_source(source)
         all_articles.extend(articles)
     

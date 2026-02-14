@@ -1,6 +1,6 @@
 # 🚗 Daily Auto News
 
-Automated daily automotive news aggregator and emailer.
+Automated daily automotive news aggregator and emailer with web UI.
 
 ## Features
 
@@ -9,6 +9,7 @@ Automated daily automotive news aggregator and emailer.
 - 📧 Sends top 5 new articles daily via AgentMail
 - 🧹 Auto-cleanup of old articles (30-day retention)
 - 🎨 Beautiful HTML email formatting with source-specific emojis
+- 🌐 **Web UI** to manage sources, view history, and check stats
 
 ## Setup
 
@@ -30,6 +31,25 @@ Automated daily automotive news aggregator and emailer.
    # Add to OpenClaw cron (8 AM daily):
    # Run: cd /home/ck/.openclaw/workspace/auto-news-daily && python3 main.py
    ```
+
+## Web UI
+
+Start the web interface:
+```bash
+python web.py
+```
+
+Then visit: **http://localhost:5000**
+
+**Login credentials:**
+- Username: `caleb`
+- Password: `autonews2026`
+
+**Features:**
+- 📊 Dashboard with stats and recent articles
+- 🔧 Add/remove news sources
+- 📜 View all sent article history
+- 📈 Detailed statistics by source and date
 
 ## Files
 

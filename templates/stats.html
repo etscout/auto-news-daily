@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics - Daily Auto News{% endblock %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem;">Statistics</h1>
+
+<div class="card">
+    <h2>Articles by Source</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>Total Articles</th>
+                <th style="width: 50%;">Distribution</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set max_count = by_source[0].count if by_source else 1 %}
+            {% for stat in by_source %}
+            <tr>
+                <td><strong>{{ stat.source }}</strong></td>
+                <td>{{ stat.count }}</td>
+                <td>
+                    <div style="background: #ecf0f1; border-radius: 4px; overflow: hidden;">
+                        <div style="background: #3498db; height: 20px; width: {{ (stat.count / max_count * 100)|int }}%;"></div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Articles by Date (Last 30 Days)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Articles Sent</th>
+                <th style="width: 50%;">Distribution</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set max_count = by_date[0].count if by_date else 1 %}
+            {% for stat in by_date %}
+            <tr>
+                <td><strong>{{ stat.date }}</strong></td>
+                <td>{{ stat.count }}</td>
+                <td>
+                    <div style="background: #ecf0f1; border-radius: 4px; overflow: hidden;">
+                        <div style="background: #2ecc71; height: 20px; width: {{ (stat.count / max_count * 100)|int }}%;"></div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

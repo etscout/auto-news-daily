@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Sources - Daily Auto News{% endblock %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem;">Manage Sources</h1>
+
+<div class="card">
+    <h2>Add New Source</h2>
+    <form method="POST" action="{{ url_for('add_source') }}">
+        <div class="form-group">
+            <label for="name">Source Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Motor Trend" required>
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input type="url" id="url" name="url" placeholder="https://www.motortrend.com/" required>
+        </div>
+        <div class="form-group">
+            <label for="selector">CSS Selector</label>
+            <input type="text" id="selector" name="selector" placeholder="e.g., article h2 a" required>
+            <small style="color: #7f8c8d; margin-top: 0.25rem;">CSS selector to find article links on the page</small>
+        </div>
+        <button type="submit" class="btn">Add Source</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Current Sources ({{ sources|length }})</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Selector</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for source in sources %}
+            <tr>
+                <td><strong>{{ source.name }}</strong></td>
+                <td><a href="{{ source.url }}" target="_blank" style="color: #3498db;">{{ source.url[:50] }}...</a></td>
+                <td><code style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px;">{{ source.selector }}</code></td>
+                <td>
+                    <a href="{{ url_for('delete_source', index=loop.index0) }}" 
+                       class="btn btn-small btn-danger"
+                       onclick="return confirm('Delete {{ source.name }}?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card" style="background: #f8f9fa;">
+    <h3 style="margin-bottom: 1rem;">💡 Finding CSS Selectors</h3>
+    <ol style="line-height: 1.8; margin-left: 1.5rem;">
+        <li>Open the news site in Chrome/Firefox</li>
+        <li>Right-click on an article headline → "Inspect"</li>
+        <li>Look for the HTML structure (usually <code>&lt;a&gt;</code> tags inside <code>&lt;h2&gt;</code> or <code>&lt;h3&gt;</code>)</li>
+        <li>Common patterns:
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li><code>article h2 a</code> - Article headlines</li>
+                <li><code>.post-title a</code> - Posts with class</li>
+                <li><code>h3.article-title a</code> - Specific headline class</li>
+            </ul>
+        </li>
+    </ol>
+</div>
+{% endblock %}

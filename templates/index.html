@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Daily Auto News{% endblock %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem;">Dashboard</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ total_sent }}</h3>
+        <p>Total Articles Sent</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_sources }}</h3>
+        <p>Active Sources</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ source_stats|length }}</h3>
+        <p>Contributing Sources</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Top Sources</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>Articles Sent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in source_stats %}
+            <tr>
+                <td>{{ stat.source }}</td>
+                <td>{{ stat.count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h2>Recent Articles</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Source</th>
+                <th>Sent At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in recent_articles %}
+            <tr>
+                <td><a href="{{ article.url }}" target="_blank" style="color: #3498db;">{{ article.title[:80] }}...</a></td>
+                <td>{{ article.source }}</td>
+                <td>{{ article.sent_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('history') }}" class="btn btn-small" style="margin-top: 1rem;">View All History</a>
+</div>
+{% endblock %}
