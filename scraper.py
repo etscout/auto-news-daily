@@ -18,11 +18,16 @@ def load_sources():
     
     # Default sources if file doesn't exist
     return [
-        {"name": "Autoblog", "url": "https://www.autoblog.com/", "selector": "article h2 a"},
-        {"name": "The Drive", "url": "https://www.thedrive.com/news", "selector": "h3 a"},
-        {"name": "Jalopnik", "url": "https://jalopnik.com/", "selector": "h1 a"},
-        {"name": "Electrek", "url": "https://electrek.co/", "selector": "h2.article-title a"},
-        {"name": "Car and Driver", "url": "https://www.caranddriver.com/news/", "selector": "h3.article-title a"}
+        {"name": "Autoblog", "url": "https://www.autoblog.com/", "selector": "article h2 a, h3 a"},
+        {"name": "The Drive", "url": "https://www.thedrive.com/news", "selector": "h3 a, h2 a"},
+        {"name": "Jalopnik", "url": "https://jalopnik.com/", "selector": "h1 a, h3 a"},
+        {"name": "Motor Trend", "url": "https://www.motortrend.com/", "selector": "h3 a, h2 a"},
+        {"name": "Car and Driver", "url": "https://www.caranddriver.com/news/", "selector": "h3 a, h2 a"},
+        {"name": "Road & Track", "url": "https://www.roadandtrack.com/", "selector": "h2 a, h3 a"},
+        {"name": "Electrek", "url": "https://electrek.co/", "selector": "h2 a, h3 a"},
+        {"name": "InsideEVs", "url": "https://insideevs.com/", "selector": "h3 a, h2 a"},
+        {"name": "Ars Technica Cars", "url": "https://arstechnica.com/cars/", "selector": "h2 a, h3 a"},
+        {"name": "TechCrunch Transportation", "url": "https://techcrunch.com/category/transportation/", "selector": "h2 a, h3 a"}
     ]
 
 def fetch_articles_from_source(source):
